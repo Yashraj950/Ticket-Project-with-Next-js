@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Link from "next/link";
-import { homepath, ticketPath, ticketsPath } from "@/paths";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Kanban, LucideKanban } from "lucide-react";
+import Head from "next/head";
+import Header from "@/components/header";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,29 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <nav
-          className=" supports-backdrop-blur:bg-background/60
-         fixed left-0 right-0 top-0 z-20
-          border-b bg-background/95 backdrop-blur
-           w-full flex py-2.5 px-5 justify-between"
-        >
-          <div>
-
-              <Link href={homepath()}
-              className={buttonVariants({variant: "ghost"})}>
-                <LucideKanban />
-               <h1 className=" ml-2 text-lg font-semibold">TicketBounty</h1>
-              </Link>
-
-          </div>
-          <div>
-            {/* <Button> */}
-            <Link href={ticketsPath()} className={buttonVariants({variant: "default"})} >
-              Tickets
-            </Link>
-            {/* </Button> */}
-          </div>
-        </nav>
+       <Header/>
 
         <main
           className="min-h-screen flex-1
