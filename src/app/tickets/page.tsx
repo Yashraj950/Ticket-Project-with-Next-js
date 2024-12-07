@@ -1,12 +1,21 @@
 import Link from "next/link";
 import { initialTickets } from "@/data";
 import { ticketPath } from "@/paths";
-// import { initialTickets } from "../../data";
+import{CircleCheck, FileText , Pencil} from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const TICKET_ICONS = {
-  OPEN: "😇",
-  DONE: "💕",
-  IN_PROGRESS: "👼",
+  OPEN: <FileText  className= "  bg-green-100  rounded-2xl text-green-400"/>,
+IN_PROGRESS:<Pencil className=" bg-green-100  rounded-2xl text-blue-400"/>,
+   DONE: <CircleCheck className=" bg-yellow-100  rounded-2xl text-yellow-400" />,
 };
 
 const TicketPage = () => {
@@ -19,19 +28,31 @@ const TicketPage = () => {
         </p>
       </div>
 
-      <div className="flex-1 flex flex-col items-center gap-y-5">
+      <Separator/>
+
+      <div className="flex-1 flex flex-col items-center gap-y-4 animate-fade-in-from-top">
         {initialTickets.map((ticket) => (
-          <div key={ticket.id} className="w-full max-w-[420px] p-4 border border-slate-50 rounded">
-            {/* <div className="flex flex-cl">{TICKET_ICONS[ticket.status]}</div> */}
-           
-            <h3 className="text-lg truncate font-semibold "><span className="pr-3 ">{TICKET_ICONS[ticket.status]}</span>{ticket.title}</h3>
-
-            <p className="text-sm pl-10 truncate text-slate-500" > {ticket.content}</p>
-
-            <Link href={ticketPath(ticket.id)} className="pl-10 text-sm text-blue-600 hover:text-blue-400 underline">
-              View
-            </Link>
-          </div>
+          <Card key={ticket.id} className="w-full max-w-[420px]">
+            <CardHeader>
+              <CardTitle className="flex gap-x-2">
+                <span>{TICKET_ICONS[ticket.status]}</span>
+                <span className="truncate "> {ticket.title} </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <span className="line-clamp-3 whitespace-break-spaces">
+                {ticket.content}
+              </span>
+            </CardContent>
+            <CardFooter>
+              <Link
+                href={ticketPath(ticket.id)}
+                className=" text-sm text-blue-600 hover:text-blue-400 underline"
+              >
+                View
+              </Link>
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </div>
