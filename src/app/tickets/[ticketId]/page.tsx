@@ -1,21 +1,25 @@
 import Placeholder from "@/components/placeholder";
 import { Button } from "@/components/ui/button";
 import { initialTickets } from "@/data";
+import TicketItem from "@/feature/ticket/components/ticket-item";
 import { ticketsPath } from "@/paths";
 import Link from "next/link";
+import { getTickets } from "./queries/get-tickets";
+// import { getTicket } from "./queries/get-tickets";
 
 type TicketPageProps = {
   params: {
     ticketId: string;
+    
   };
 };
 
-const TicketPage = ({ params }: TicketPageProps) => {
+const TicketPage = async ({ params }: TicketPageProps) => {
 
-  const ticket = initialTickets.find((ticket) => ticket.id === params.ticketId);
-
+  const ticket = await getTickets(params.ticketId);
   if (!ticket) {
-    return <Placeholder label="🥰 Ticket not found 🫣"
+    return <Placeholder 
+    label="🥰 Ticket not found 🫣"
       button={
         <Button asChild variant="outline"  >
         <Link href={ticketsPath()} >Go  to tickets</Link>
@@ -25,9 +29,8 @@ const TicketPage = ({ params }: TicketPageProps) => {
   }
 
   return (
-    <div>
-      <h2 className="text-lg"> {ticket.title}</h2>
-      <p  className="text-lg">{ticket.content}</p>
+    <div className="flex justify-center animate-fade-in-from-top">
+     <TicketItem ticket={ticket} />
     </div>
   );
 };
