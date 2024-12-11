@@ -6,7 +6,6 @@ import Header from "@/components/header";
 import ThemeProvider from "@/components/theme/theme-provider";
 // import { ThemeProvider } from "next-themes";
 
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -33,18 +32,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider >
-       <Header/>
-
-        <main
-          className="min-h-screen flex-1
+        <ThemeProvider>
+          <Header />
+          <main
+            className="min-h-screen flex-1
         overflow-y-auto overflow-x-hidden
         py-24 px-8
         bg-secondary/20
         flex flex-col"
-        >
-          {children}
-        </main>
+          >
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>

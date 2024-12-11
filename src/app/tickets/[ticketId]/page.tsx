@@ -1,15 +1,17 @@
 import Placeholder from "@/components/placeholder";
 import { Button } from "@/components/ui/button";
-import { initialTickets } from "@/data";
+
 import TicketItem from "@/feature/ticket/components/ticket-item";
 import { ticketsPath } from "@/paths";
 import Link from "next/link";
-import { getTickets } from "./queries/get-tickets";
-// import { getTicket } from "./queries/get-tickets";
+import { getTickets } from "./queries/get-ticket";
+
 
 type TicketPageProps = {
   params: {
     ticketId: string;
+    
+    
     
   };
 };
