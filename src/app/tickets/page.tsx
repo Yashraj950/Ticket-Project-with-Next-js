@@ -2,6 +2,7 @@ import Heading from "@/components/heading";
 import Spinner from "@/components/spinner";
 import TicketList from "@/feature/ticket/components/ticket-list";
 
+
 import { Suspense } from "react";
 
 const TicketPage = () => {
