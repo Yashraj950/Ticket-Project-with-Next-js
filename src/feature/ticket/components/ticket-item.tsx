@@ -10,17 +10,19 @@ import clsx from "clsx";
 // import { Return } from "@prisma/client/runtime/library";
 
 import { Ticket } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+// import { prisma } from "@/lib/prisma";
 import { deleteTicket } from "@/app/tickets/actions/delete-ticket";
+import { getTicket } from "@/app/tickets/[ticketId]/queries/get-ticket";
 
 type TicketItemProps = {
   ticket: Ticket;
   isDetail?: boolean;
 };
-const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
+const TicketItem = async({ ticket, isDetail }: TicketItemProps) => {
+  const ticketPerTicketItem = await getTicket(ticket.id);
   const detailButton = (
     <Button variant="outline" size="icon" asChild>
-      <Link href={ticketPath(ticket.id)}>
+      <Link prefetch href={ticketPath(ticket.id)}>
         <LucideSquareArrowOutUpRight className="w-4 h-4" />
       </Link>
     </Button>
