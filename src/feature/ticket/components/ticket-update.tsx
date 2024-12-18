@@ -1,4 +1,5 @@
-import { createTicket } from "@/app/tickets/actions/create-ticket";
+// import { updateTicket } from "@/app/tickets/actions/create-ticket";
+import { updateTicket } from "@/app/tickets/actions/update-ticket";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +12,9 @@ type TicketUpdateFormProps = {
 
 const TicketUpdateForm = ({ ticket }: TicketUpdateFormProps) => {
   return (
-    <form action={createTicket} className="flex flex-col gap-y-2">
+    <form action={updateTicket.bind(null, ticket.id)} className="flex flex-col gap-y-2">
+
+
       <Label htmlFor="title">Ticket</Label>
       <Input id="title" name="title"  type="text"  defaultValue={ticket.title} />
 
