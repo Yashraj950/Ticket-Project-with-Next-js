@@ -1,5 +1,6 @@
 import CardCompact from "@/components/card-compact";
 import Heading from "@/components/heading";
+import RedirectToast from "@/components/redirect-toast";
 import Spinner from "@/components/spinner";
 // import TicketCreateForm from "@/feature/ticket/components/ticket-create-form";
 import TicketList from "@/feature/ticket/components/ticket-list";
@@ -20,6 +21,8 @@ const TicketPage = () => {
         <TicketList />
       </Suspense>
     </div>
+
+
   );
 };
 

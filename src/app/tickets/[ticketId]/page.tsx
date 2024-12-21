@@ -3,6 +3,7 @@ import TicketItem from "@/feature/ticket/components/ticket-item";
 // import { getTickets } from "@/app/tickets/[ticketId]/queries/get-tickets";
 import { notFound } from "next/navigation";
 import { getTicket } from "./queries/get-ticket";
+import RedirectToast from "@/components/redirect-toast";
 
 
 type TicketPageProps = {
@@ -22,9 +23,12 @@ const TicketPage = async ({ params }: TicketPageProps) => {
 }
 
   return (
+    <>
     <div className="flex justify-center animate-fade-in-from-top">
      <TicketItem ticket={ticket} isDetail  />
     </div>
+   
+    </>
   );
 };
 

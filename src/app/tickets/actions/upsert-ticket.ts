@@ -1,14 +1,22 @@
 "use server";
-import { z } from "zod";
+import {  z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { ticketsPath, ticketPath } from "@/paths";
-import { revalidatePath  } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { ActionState, fromErrorToActionState } from "@/components/form/utils/to-action-state";
+import {
+  ActionState,
+  fromErrorToActionState,
+  toActionState,
+} from "@/components/form/utils/to-action-state";
+import { setCookieByKey } from "./cookies";
+import { toCent } from "@/utils/currency";
 
 const upsertTicketSchema = z.object({
   title: z.string().min(1).max(191),
   content: z.string().min(1).max(1024),
+  deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/,"IS required"),
+  bounty: z.coerce.number().positive(),
 });
 
 export const upsertTicket = async (
@@ -20,24 +28,31 @@ export const upsertTicket = async (
     const data = upsertTicketSchema.parse({
       title: formData.get("title"),
       content: formData.get("content"),
+      deadline: formData.get("deadline"),
+      bounty: formData.get("bounty"),
     });
+    const dbData = {
+      ...data,
+      bounty: toCent(data.bounty),
+    }
 
     await prisma.ticket.upsert({
       where: {
         id: id || "",
       },
-      update: data,
-      create: data,
+      // ! update this ticket if it exists
+      update: dbData,
+      create: dbData,
     });
   } catch (error) {
-     return fromErrorToActionState(error, formData);
-  
+    return fromErrorToActionState(error, formData);
   }
 
   revalidatePath(ticketsPath());
   if (id) {
+    setCookieByKey("toast","Ticket updated");
     redirect(ticketPath(id));
   }
 
-  return { message: "Ticket created" };
+  return toActionState("SUCCESS", "Ticket created");
 };

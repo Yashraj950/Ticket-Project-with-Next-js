@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ticketEditPath, ticketPath } from "@/paths";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { TICKET_ICONS } from "./constants";
 import {
   LucidePencil,
@@ -8,14 +8,12 @@ import {
   LucideTrash,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-// import { Ticket } from "@prisma/client";
 import clsx from "clsx";
-// import { Return } from "@prisma/client/runtime/library";
 
 import { Ticket } from "@prisma/client";
-// import { prisma } from "@/lib/prisma";
 import { deleteTicket } from "@/app/tickets/actions/delete-ticket";
 import { getTicket } from "@/app/tickets/[ticketId]/queries/get-ticket";
+import { toCurrencyFromCent } from "@/utils/currency";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -60,7 +58,7 @@ const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
         <CardHeader>
           <CardTitle className="flex gap-x-2">
             <span>{TICKET_ICONS[ticket.status]}</span>
-            <span className="truncate "> {ticket.title} </span>
+            <span className="truncate"> {ticket.title} </span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -71,6 +69,10 @@ const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
           >
             {ticket.content}
           </span>
+          <CardFooter className="flex justify-between">
+            <p className="text-xs text-muted-foreground">{ticket.deadline}</p>
+          <p className="text-xs text-muted-foreground"> {toCurrencyFromCent(ticket.bounty)} </p>
+          </CardFooter>
         </CardContent>
       </Card>
       <div className="flex flex-col gap-y-1">
